@@ -1,0 +1,106 @@
+ul.checklists-list
+  list-style: none
+  margin: 0
+  padding: 0
+  overflow: auto
+  margin: 0 -3%
+
+li.checklists-list-item
+  margin: 0
+  padding: 0
+  width: 27.3333%
+  height: 235px
+  float: left
+  border: 1px solid #979797
+  border-radius: 8px
+  margin: 0 3%
+  display: flex
+  overflow: hidden
+  margin-bottom: 2em
+
+li.checklists-list-item--new
+  border: 1px dashed #979797
+  > .checklists-list-item-content
+    position: relative
+    text-decoration: none
+    color: #979797
+    display: block
+    padding: 20px
+    flex: 1
+    text-align: center
+
+.checklists-list-item-content-plus
+  font-size: 62px
+  font-weight: 300
+  padding: 30px 0
+
+.checklists-list-item--default
+  position: relative
+  display: block
+  padding: 20px
+  flex: 1
+
+.checklists-list-item--hover
+  position: relative
+  display: none
+  padding: 20px
+  flex: 1
+  background: #979797
+
+li.checklists-list-item:hover >
+  .checklists-list-item--default
+    display: none
+  .checklists-list-item--hover
+    display: block
+
+.checklists-list-item-actions
+  float: right
+  a
+    margin-right: 6px
+
+.checklists-list-item-counters
+  position: absolute
+  left: 0
+  right: 0
+  bottom: 0
+  border-top: 1px solid #979797
+
+.checklists-list-item-counters-item
+  width: 33.3333%
+  padding: 20px
+  float: left
+
+.checklists-list-item-counters-item-count
+  font-size: 40px
+  font-weight: 300
+
+.checklists-list-item-counters-item-label
+  opacity: 0.27
+  font-size: 12px
+
+.checklists-list-item-actions-run > a
+  border: 1px solid #fff
+  width: 100%
+  text-align: center
+  font-size: 20px
+  padding: 10px
+  margin-top: 40px
+  color: #fff
+  text-decoration: none
+  border-radius: 5px
+  display: inline-block
+
+.checklists-new-label
+  display: block
+  font-size: 16px
+  margin-bottom: 24px
+
+.checklists-new-input
+  padding: 20px 14px
+  margin-top: 10px
+  width: 100%
+  background: #FFFFFF
+  border: 1px solid #979797
+  box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.18)
+  border-radius: 2px
+  min-height: 58px
