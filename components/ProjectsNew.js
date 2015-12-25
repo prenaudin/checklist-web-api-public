@@ -18,22 +18,24 @@ class ProjectsNew extends React.Component {
     return (
       <div className='projects-new'>
 
-        <label className='projects-new-label'>
-          Title
+        <label className='projects-new-label form-group'>
+          <div className='form-title'>Title</div>
           <input
-            className='projects-new-input'
+            className='projects-new-input form-input form-input--lg'
             type='text'
+            autoFocus
             value={this.state.title}
             onChange={this.handleChangeTitle.bind(this)}
+            placeholder='Awesome Project'
           />
         </label>
 
-        <div className='projects-new-actions'>
-          <Link to={`/projects`}>
+        <div className='projects-new-actions form-actions'>
+          <Link className='btn btn-default' to={`/projects`}>
             Cancel
           </Link>
-          {' - '}
-          <a href='javascript:void' onClick={this.handleClickSave.bind(this)}>
+
+          <a href='javascript:void' className='btn btn-primary' onClick={this.handleClickSave.bind(this)}>
             Save
           </a>
         </div>
@@ -50,6 +52,7 @@ class ProjectsNew extends React.Component {
       title: this.state.title,
     }
     this.props.actions.addProject(data);
+    this.props.history.pushState(null, '/projects');
   }
 }
 

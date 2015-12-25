@@ -9,11 +9,8 @@ class ChecklistsList extends React.Component {
         <li className='checklists-list-item checklists-list-item--new'>
           <Link
             to={`/projects/${this.props.params.projectId}/checklists/new`}
-            className='checklists-list-item-content'
+            className='checklists-list-item-content--new'
           >
-            <div className='checklists-list-item-content-plus'>
-              +
-            </div>
             <div className='checklists-list-item-content-text'>
               New Checklist
             </div>
@@ -22,7 +19,7 @@ class ChecklistsList extends React.Component {
         {
           this.props.checklists.map((checklist) => {
             return (
-              <li key={checklist.get('_id')} className='checklists-list-item'>
+              <li key={checklist.get('id')} className='checklists-list-item projects-list-item--show'>
                 <div className='checklists-list-item--default'>
                   {checklist.get('title')}
                   <div className='checklists-list-item-counters'>
@@ -54,14 +51,14 @@ class ChecklistsList extends React.Component {
                 </div>
                 <div className='checklists-list-item--hover'>
                   <div className='checklists-list-item-actions-secondary'>
-                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('_id')}/share`}>S</Link>
-                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('_id')}/edit`}>E</Link>
-                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('_id')}/history`}>H</Link>
-                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('_id')}/duplicate`}>D</Link>
+                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('id')}/share`}>S</Link>
+                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('id')}/edit`}>E</Link>
+                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('id')}/history`}>H</Link>
+                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('id')}/duplicate`}>D</Link>
                   </div>
 
                   <div className='checklists-list-item-actions-run'>
-                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('_id')}/run`}>New Test</Link>
+                    <Link to={`/projects/${checklist.get('project')}/checklists/${checklist.get('id')}/run`}>New Test</Link>
                   </div>
                 </div>
               </li>

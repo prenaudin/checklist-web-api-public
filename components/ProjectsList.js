@@ -1,19 +1,22 @@
 import React from 'react';
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import * as ProjectActions from '../actions/projects';
 import { Link } from 'react-router';
 
 class ProjectsList extends React.Component {
+  componentDidMount() {
+    this.props.actions.findAllProjects()
+  }
+
   render() {
     return (
       <ul className="projects-list">
         <li className='projects-list-item projects-list-item--new'>
           <Link
             to={`/projects/new`}
-            className='projects-list-item-content'
+            className='projects-list-item-content--new'
           >
-            <div className='projects-list-item-content-plus'>
-              +
-            </div>
             <div className='projects-list-item-content-text'>
               New Project
             </div>
@@ -22,9 +25,10 @@ class ProjectsList extends React.Component {
         {
           this.props.projects.map((project) => {
             return (
-              <li key={project.get('_id')} className='projects-list-item'>
+              <li key={project.get('id')} className='projects-list-item projects-list-item--show'>
+                <div className='projects-list-item-patch'/>
                 <Link
-                  to={`/projects/${project.get('_id')}/checklists`}
+                  to={`/projects/${project.get('id')}/checklists`}
                   className='projects-list-item-content'
                 >
                   <div className='projects-list-item-title'>
@@ -49,4 +53,10 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(ProjectsList)
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(ProjectActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsList)

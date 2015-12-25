@@ -5,7 +5,7 @@ const db = new PouchDB('checklyst-server');
 db.destroy();
 
 db.put({
-  _id: 'pierre@muxumuxu.com',
+  id: 'pierre@muxumuxu.com',
   email: 'pierre@muxumuxu.com',
   name: 'pierre',
   type: 'users'
@@ -15,7 +15,7 @@ db.put({
 
 // Projects
 db.put({
-  _id: 'azendoo',
+  id: 'azendoo',
   title: 'Azendoo',
   type: 'projects',
   users: ['pierre@muxumuxu.com'],
@@ -23,7 +23,7 @@ db.put({
 });
 
 db.put({
-  _id: 'sample',
+  id: 'sample',
   title: 'Sample Project',
   type: 'projects',
   users: ['pierre@muxumuxu.com'],
@@ -32,7 +32,7 @@ db.put({
 
 // Checklists
 db.put({
-  _id: 'calendar',
+  id: 'calendar',
   title: 'Calendar',
   type: 'checklists',
   project: 'azendoo',
@@ -45,7 +45,7 @@ db.put({
 })
 
 db.put({
-  _id: 'payment',
+  id: 'payment',
   title: 'Payment',
   type: 'checklists',
   project: 'azendoo',
@@ -58,7 +58,7 @@ db.put({
 })
 
 db.put({
-  _id: 'default',
+  id: 'default',
   title: 'Default',
   type: 'checklists',
   project: 'sample',

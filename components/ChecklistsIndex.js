@@ -1,9 +1,14 @@
-import React from 'react';
-import ChecklistsList from './ChecklistsList';
-import ChecklistsHelpers from '../utils/ChecklistsHelpers';
+import React from 'react'
+import ChecklistsList from './ChecklistsList'
+import ChecklistsHelpers from '../utils/ChecklistsHelpers'
+import * as ProjectActions from '../actions/projects'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 class ChecklistsIndex extends React.Component {
+  componentDidMount() {
+    this.props.actions.findProject({projectId: this.props.params.projectId})
+  }
 
   render() {
     const checklists = ChecklistsHelpers.getChecklistsByProject({
@@ -11,8 +16,19 @@ class ChecklistsIndex extends React.Component {
       projectId: this.props.params.projectId
     });
 
+    const project = this.props.projects.get(this.props.params.projectId)
+    let projectTitle
+    if (project) {
+      projectTitle = project.get('title')
+    } else {
+      projectTitle = 'Project'
+    }
+
     return (
       <div className="checklists-index page">
+        <h1 className='checklists-index-h1'>
+          {projectTitle}
+        </h1>
         <ChecklistsList {...this.props} checklists={checklists}/>
       </div>
     );
@@ -22,7 +38,14 @@ class ChecklistsIndex extends React.Component {
 function mapStateToProps(state) {
   return {
     checklists: state.checklists,
+    projects: state.projects
   }
 }
 
-export default connect(mapStateToProps)(ChecklistsIndex)
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(ProjectActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChecklistsIndex)

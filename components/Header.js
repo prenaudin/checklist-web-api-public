@@ -1,15 +1,15 @@
 import React from 'react';
+import HeaderAccount from './HeaderAccount';
+import { Link } from 'react-router';
 
 class Header extends React.Component {
   render() {
     return (
       <div className="header">
-        <div className="header-title">
+        <Link to='/' className="header-title header-title--brand header-breadcrumbs-item">
           Checklyst
-        </div>
-        <div className="header-infos">
-          luc@azendoo.com
-        </div>
+        </Link>
+        <HeaderAccount/>
       </div>
     );
   }

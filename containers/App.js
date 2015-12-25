@@ -5,22 +5,23 @@ import Immutable from 'immutable'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import * as ProjectActions from '../actions/projects'
+import * as AccountActions from '../actions/account'
 import * as ChecklistActions from '../actions/checklists'
 
-require('../styles/App.sass');
-require('../styles/Checklists.sass');
-require('../styles/Header.sass');
-require('../styles/Home.sass');
-require('../styles/Projects.sass');
+require('../styles/index.sass');
 
 class App extends Component {
+  componentDidMount() {
+    this.props.actions.fetchAccount()
+  }
+
   render() {
-    const { projects, actions, syncState } = this.props
+    const { projects, actions } = this.props
     return (
       <div className="app">
-        {this.props.header || <Header/>}
+        {this.props.header || <Header {...this.props}/>}
         {this.props.content || this.props.children}
-        <Footer status={syncState}/>
+        <Footer/>
       </div>
     )
   }
@@ -34,14 +35,13 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     projects: state.projects,
-    checklists: state.checklists,
-    syncState: state.syncState,
+    checklists: state.checklists
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(ProjectActions, ChecklistActions, dispatch)
+    actions: bindActionCreators(AccountActions, dispatch)
   }
 }
 

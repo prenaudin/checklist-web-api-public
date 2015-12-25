@@ -33,45 +33,57 @@ class ChecklistsNew extends React.Component {
     return (
       <div className='checklists-new'>
 
-        <label className='checklists-new-label'>
-          Title
+        <label className='checklists-new-label form-group'>
+          <div className='form-title'>
+            Title
+          </div>
           <input
-            className='checklists-new-input'
+            className='checklists-new-input form-input form-input--lg'
             type='text'
             value={this.state.title}
             onChange={this.handleChangeTitle.bind(this)}
+            placeholder='Awesome Checklist'
           />
         </label>
 
         {
           this.state.suite.map((test, i) => {
             return (
-              <label key={test.key} className='checklists-new-label'>
-                Story #{i}
+              <label key={test.key} className='checklists-new-label form-group'>
+                <div className='form-title'>
+                  Story #{i}
+                </div>
                 <input
-                  className='checklists-new-input'
+                  className='checklists-new-input form-input form-input--md'
                   type='text'
                   value={test.title}
-                  onChange={(e) => this.handleChangeTestTitle(e, test.key)}
+                  onChange={
+                    (e) => {
+                      this.handleChangeTestTitle(e, test.key)
+                      (i === ( this.state.suite.size - 1 )) && this.handleChangeLastTest(e)
+                    }
+                  }
+                  onFocus={
+                    (e) => {
+                      (i === ( this.state.suite.size - 1 )) && this.handleFocusLastTest(e)
+                    }
+                  }
+                  placeholder='You can use markdown'
                 />
               </label>
             );
           }).toArray()
         }
 
-        <button
-          className='checklists-new-button'
-          onClick={this.handleClickAddStory.bind(this)}
-        >
-          Add Story
-        </button>
-
-        <div className='checklists-new-actions'>
-          <Link to={`/projects/${projectId}/checklists`}>
+        <div className='checklists-new-actions form-actions'>
+          <Link className='btn btn-default' to={`/projects/${projectId}/checklists`}>
             Cancel
           </Link>
-          {' - '}
-          <a href='javascript:void' onClick={this.handleClickSave.bind(this)}>
+          <a
+            href='javascript:void'
+            className='btn btn-primary'
+            onClick={this.handleClickSave.bind(this)}
+          >
             Save
           </a>
         </div>
@@ -91,12 +103,18 @@ class ChecklistsNew extends React.Component {
     });
   }
 
-  handleClickAddStory() {
-    const oldSuite = this.state.suite;
-    const test = createTest()
-    this.setState({
-      suite: oldSuite.set(test.key, test)
-    });
+  handleFocusLastTest(e) {
+    if (e.target.value.length == 0) {
+      return false
+    }
+    this.appendTest()
+  }
+
+  handleChangeLastTest(e) {
+    if (e.target.value.length == 0) {
+      return false
+    }
+    this.appendTest()
   }
 
   handleClickSave() {
@@ -106,6 +124,14 @@ class ChecklistsNew extends React.Component {
       project: this.props.params.projectId,
     }
     this.props.actions.addChecklist(data);
+  }
+
+  appendTest() {
+    const oldSuite = this.state.suite;
+    const test = createTest()
+    this.setState({
+      suite: oldSuite.set(test.key, test)
+    });
   }
 }
 
