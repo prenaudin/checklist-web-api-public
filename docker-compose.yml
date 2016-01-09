@@ -1,0 +1,17 @@
+web:
+  build: ./web
+  ports:
+    - "3000:3000"
+  links:
+    - hoodie:hoodie
+    - couchdb:couchdb
+hoodie:
+  build: ./hoodie
+  ports:
+    - "8080:8080"
+  links:
+    - couchdb:couchdb
+couchdb:
+  image: klaemo/couchdb
+  ports:
+    - "5984:5984"

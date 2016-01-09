@@ -1,5 +1,5 @@
 node_modules
 npm-debug.log
 coverage
-checklyst-server
-data
+web/checklyst-server
+web/data

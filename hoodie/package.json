@@ -1,0 +1,12 @@
+{
+  "name": "checklyst-hoodie",
+  "version": "0.1.0",
+  "description": "QA for the future",
+  "scripts": {
+    "start": "node ./node_modules/hoodie-start/index.js --db-url=\"http://admin:BCRmhDz4hT7g@$COUCHDB_PORT_5984_TCP_ADDR:5984\" --admin-password=please"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "hoodie": "hoodiehq/hoodie#tent"
+  }
+}
