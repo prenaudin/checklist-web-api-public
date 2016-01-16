@@ -1,0 +1,9 @@
+development:
+  url: postgres://localhost/checklyst_development
+
+test:
+  url: postgres://localhost/checklyst_test
+
+production:
+  url:  <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV['DATABASE_POOL'] || ENV['PUMA_MAX_THREADS'] || 5 %>
