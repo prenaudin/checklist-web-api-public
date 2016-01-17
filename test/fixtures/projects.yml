@@ -1,7 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-
-two:
-  title: MyString
+sample:
+  title: 'Sample Project'
+  user: pierre

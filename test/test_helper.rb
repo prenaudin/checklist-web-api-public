@@ -7,4 +7,8 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def user_authentication_headers(user)
+    auth_headers = user.create_new_auth_token
+    auth_headers
+  end
 end
