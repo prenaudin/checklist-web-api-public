@@ -4,7 +4,7 @@ class HeaderAccount extends React.Component {
   render() {
     return (
       <div className="header-infos">
-        luc@azendoo.com
+        luc@muxumuxu.com
       </div>
     );
   }

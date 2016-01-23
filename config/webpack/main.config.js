@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var dist = path.join(__dirname, '../', '../');
 
@@ -34,12 +33,11 @@ var config = module.exports = {
       },
       {
         test: /\.sass$/,
-        loader: ExtractTextPlugin.extract('style', 'css!sass')
+        loader: 'style!css!sass'
       }
     ],
   },
   plugins: [
-    new ExtractTextPlugin('application.css'),
     new webpack.ProvidePlugin({
       'Promise': 'es6-promise',
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
