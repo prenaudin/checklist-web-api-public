@@ -1,22 +1,26 @@
-import { UPDATE_ACCOUNT } from '../constants/ActionTypes'
+import { SIGNIN } from '../constants/ActionTypes'
 import Immutable from 'immutable'
 
 const AccountRecord = Immutable.Record({
   id: null,
-  username: null,
+  email: null,
   isSignedIn: false
 })
 
 const initialState = new AccountRecord()
 
 export default function account(state = initialState, action) {
-  let id;
+
   switch (action.type) {
 
-    case UPDATE_ACCOUNT:
+    case SIGNIN:
       return state
+        .set('id', action.data.id)
+        .set('email', action.data.email)
+        .set('isSignedIn', true)
 
     default:
       return state
+
   }
 }

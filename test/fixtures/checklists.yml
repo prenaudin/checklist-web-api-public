@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-
-two:
-  title: MyString
+home:
+  title: 'Home'
+  test_suite: [{test: 'Clean the oven'}, {test: 'Empty bins'}]
+  project: sample

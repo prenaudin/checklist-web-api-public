@@ -6,7 +6,7 @@ import _ from 'lodash'
 export function addProject(data) {
   return (dispatch, getState) => {
     return api.createProject({data}).then((resp) => {
-      dispatch({ type: types.INSERT_PROJECT, project: resp.data })
+      dispatch({ type: types.RECEIVED_ENTITIES, entities: resp.entities })
     })
   }
 }
@@ -16,15 +16,17 @@ export function insertProject(data) {
 }
 
 export function findProject({projectId}) {
-  return { type: types.FIND_PROJECT }
+  return (dispatch, getState) => {
+    return api.findProject(projectId).then((resp) => {
+      dispatch({ type: types.RECEIVED_ENTITIES, entities: resp.entities })
+    })
+  }
 }
 
 export function findAllProjects() {
   return (dispatch, getState) => {
     return api.findAllProjects().then((resp) => {
-      _.each(resp.data, (projectData) => {
-        dispatch({ type: types.INSERT_PROJECT, project: projectData })
-      })
+      dispatch({ type: types.RECEIVED_ENTITIES, entities: resp.entities })
     })
   }
 }

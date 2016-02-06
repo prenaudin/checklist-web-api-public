@@ -1,34 +1,31 @@
-import { ADD_CHECKLIST, INSERT_CHECKLIST} from '../constants/ActionTypes'
+import { RECEIVED_ENTITIES } from '../constants/ActionTypes'
 import Immutable from 'immutable'
 
-const initialState  = new Immutable.OrderedSet()
+const initialState  = new Immutable.Map()
+
 const ChecklistRecord = Immutable.Record({
   id: null,
-  _rev: null,
-  type: 'checklist',
+  createdAt: null,
+  updatedAt: null,
+  type: 'checklists',
   title: '',
-  project: '',
-  suite: new Immutable.OrderedSet()
+  project: null,
+  testSuite: {}
 })
+
+const mergeChecklists = (state, checklists) => {
+  return state.merge(checklists.map((checklist) => {
+    return new ChecklistRecord(checklist)
+  }))
+}
 
 export default function checklists(state = initialState, action) {
   switch (action.type) {
-    case ADD_CHECKLIST:
-      return state.add(new ChecklistRecord({
-        id: id(),
-        title: action.data.title,
-        suite: action.data.suite,
-        project: action.data.project
-      }))
-
-    case INSERT_CHECKLIST:
-      return state.add(new ChecklistRecord(action.checklist))
+    case RECEIVED_ENTITIES:
+      if (!action.entities.checklists) { return state }
+      return mergeChecklists(state, Immutable.fromJS(action.entities.checklists))
 
     default:
       return state
   }
-}
-
-function id() {
-  return Math.random().toString(36).substring(7);
 }

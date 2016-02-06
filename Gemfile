@@ -12,7 +12,6 @@ gem 'active_model_serializers', '~> 0.10.0.rc3'
 gem 'devise', '~> 3.5.3'
 gem 'devise_token_auth'
 gem 'omniauth'
-
 gem 'gravatarify', '~> 3.1.1'
 
 group :development, :test do
@@ -20,4 +19,10 @@ group :development, :test do
   gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'rspec_api_documentation'
+  gem 'json_matchers'
 end

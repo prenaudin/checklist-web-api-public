@@ -10,7 +10,7 @@ import * as ChecklistActions from '../actions/checklists'
 
 class App extends Component {
   componentDidMount() {
-    this.props.actions.fetchAccount()
+    this.props.actions.validateToken()
   }
 
   render() {

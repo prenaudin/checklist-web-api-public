@@ -17,12 +17,7 @@ class ChecklistsIndex extends React.Component {
     });
 
     const project = this.props.projects.get(this.props.params.projectId)
-    let projectTitle
-    if (project) {
-      projectTitle = project.get('title')
-    } else {
-      projectTitle = 'Project'
-    }
+    let projectTitle = project ? project.get('title') : ''
 
     return (
       <div className="checklists-index page">

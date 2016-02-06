@@ -1,4 +1,4 @@
-class UserShowProjectContext
+class UserListChecklistsContext
   attr_reader :user, :project
 
   def self.call(user_id, project_id)
@@ -8,9 +8,11 @@ class UserShowProjectContext
   def initialize(user_id, project_id)
     @user = User.find(user_id)
     @project = Project.find(project_id)
+    #TODO Check Authorization
   end
 
   def call
-    project
+    checklists = project.checklists
+    checklists
   end
 end

@@ -1,4 +1,7 @@
 export const ERROR = 'ERROR'
+export const RECEIVED_ENTITIES = 'RECEIVED_ENTITIES'
+
+export const SIGNIN = 'SIGNIN'
 
 export const ADD_PROJECT = 'ADD_PROJECT'
 export const INSERT_PROJECT = 'INSERT_PROJECT'

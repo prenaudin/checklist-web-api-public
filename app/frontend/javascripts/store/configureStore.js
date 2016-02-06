@@ -5,7 +5,8 @@ import rootReducer from '../reducers'
 
 const initialState = {
   projects: new Immutable.Map(),
-  checklists: new Immutable.OrderedSet()
+  checklists: new Immutable.Map(),
+  account: new Immutable.Map()
 }
 
 export default function configureStore() {

@@ -1,3 +1,5 @@
 import local from './local'
-const api = local
+import server from './server'
+
+const api = server
 export default api

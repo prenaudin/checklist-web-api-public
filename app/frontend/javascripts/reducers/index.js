@@ -4,5 +4,7 @@ import checklists from './checklists'
 import account from './account'
 
 export default combineReducers({
-  projects, checklists, account
+  projects,
+  checklists,
+  account
 })

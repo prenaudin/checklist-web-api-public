@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import AuthSignin from './AuthSignin';
 
 class Home extends React.Component {
   render() {
@@ -17,6 +18,8 @@ class Home extends React.Component {
             My Projects
           </Link>
         </p>
+
+        <AuthSignin/>
       </div>
     );
   }
