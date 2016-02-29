@@ -7,12 +7,46 @@ import { connect } from 'react-redux'
 import * as ChecklistActions from '../actions/checklists';
 
 const TestRecord = Immutable.Record({
-  key: null,
+  id: null,
   title: '',
 })
 
 const createTest = () => {
-  return new TestRecord({ key: _.uniqueId() })
+  return new TestRecord({ id: _.uniqueId() })
+}
+
+const serializeTestSuite = (testSuite) => {
+  return testSuite.filter((test) => {
+    return !_.isEmpty(test.title)
+  })
+}
+
+class ChecklistsNewTestSuiteItem extends React.Component {
+
+  render() {
+    return (
+      <label className='checklists-new-label form-group'>
+        <div className='form-title'>
+          Story #{this.props.index}
+        </div>
+        <input
+          className='checklists-new-input form-input form-input--md'
+          type='text'
+          value={this.props.test.title}
+          onChange={this.handleChange.bind(this)}
+          placeholder='You can use markdown'
+        />
+      </label>
+    );
+  }
+
+  handleChange(e) {
+    if (this.props.isLast) {
+      this.props.onChangeLastTestTitle(e, this.props.test.id)
+    } else {
+      this.props.onChangeTestTitle(e, this.props.test.id)
+    }
+  }
 }
 
 class ChecklistsNew extends React.Component {
@@ -23,12 +57,13 @@ class ChecklistsNew extends React.Component {
 
     this.state = {
       title: '',
-      suite: new Immutable.Map().set(test.key, test)
+      testSuite: new Immutable.Map().set(test.id, test)
     };
   }
 
   render() {
     const projectId = this.props.params.projectId;
+    let testIndex = 0;
 
     return (
       <div className='checklists-new'>
@@ -40,6 +75,7 @@ class ChecklistsNew extends React.Component {
           <input
             className='checklists-new-input form-input form-input--lg'
             type='text'
+            autoFocus
             value={this.state.title}
             onChange={this.handleChangeTitle.bind(this)}
             placeholder='Awesome Checklist'
@@ -47,45 +83,45 @@ class ChecklistsNew extends React.Component {
         </label>
 
         {
-          this.state.suite.map((test, i) => {
+          this.state.testSuite.map(((test) => {
+            testIndex++
             return (
-              <label key={test.key} className='checklists-new-label form-group'>
-                <div className='form-title'>
-                  Story #{i}
-                </div>
-                <input
-                  className='checklists-new-input form-input form-input--md'
-                  type='text'
-                  value={test.title}
-                  onChange={
-                    (e) => {
-                      this.handleChangeTestTitle(e, test.key)
-                      (i === ( this.state.suite.size - 1 )) && this.handleChangeLastTest(e)
-                    }
-                  }
-                  onFocus={
-                    (e) => {
-                      (i === ( this.state.suite.size - 1 )) && this.handleFocusLastTest(e)
-                    }
-                  }
-                  placeholder='You can use markdown'
-                />
-              </label>
+              <ChecklistsNewTestSuiteItem
+                key={test.id}
+                index={testIndex}
+                test={test}
+                isLast={testIndex === this.state.testSuite.size}
+                onChangeTestTitle={this.handleChangeTestTitle.bind(this)}
+                onChangeLastTestTitle={this.handleChangeLastTestTitle.bind(this)}
+              />
             );
-          }).toArray()
+          }).bind(this)).toArray()
         }
 
-        <div className='checklists-new-actions form-actions'>
-          <Link className='btn btn-default' to={`/projects/${projectId}/checklists`}>
-            Cancel
-          </Link>
-          <a
-            href='javascript:void'
-            className='btn btn-primary'
-            onClick={this.handleClickSave.bind(this)}
-          >
-            Save
-          </a>
+        <div className='form-footer-container'>
+          <div className='form-footer clearfix'>
+            <div className='form-resume'>
+              <div className='form-resume-count'>
+                {serializeTestSuite(this.state.testSuite).size}
+              </div>
+              <div className='form-resume-subtitle'>
+                Tests
+              </div>
+            </div>
+
+            <div className='checklists-new-actions form-actions'>
+              <Link className='btn btn-default' to={`/projects/${projectId}/checklists`}>
+                Cancel
+              </Link>
+              <a
+                href='javascript:void'
+                className='btn btn-primary'
+                onClick={this.handleClickSave.bind(this)}
+              >
+                Save
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -95,44 +131,38 @@ class ChecklistsNew extends React.Component {
     this.setState({title: e.target.value});
   }
 
-  handleChangeTestTitle(e, key) {
+  handleChangeTestTitle(e, id) {
     const newTitle = e.target.value;
-    const oldSuite = this.state.suite;
+    const oldSuite = this.state.testSuite;
     this.setState({
-      suite: oldSuite.set(key, oldSuite.get(key).set('title', newTitle))
+      testSuite: oldSuite.set(id, oldSuite.get(id).set('title', newTitle))
     });
   }
 
-  handleFocusLastTest(e) {
-    if (e.target.value.length == 0) {
-      return false
-    }
-    this.appendTest()
-  }
-
-  handleChangeLastTest(e) {
-    if (e.target.value.length == 0) {
-      return false
-    }
-    this.appendTest()
+  handleChangeLastTestTitle(e, id) {
+    const newTitle = e.target.value;
+    const oldSuite = this.state.testSuite;
+    const newTest = createTest()
+    this.setState({
+      testSuite: oldSuite
+        .set(newTest.id, newTest)
+        .set(id, oldSuite.get(id).set('title', newTitle))
+    });
   }
 
   handleClickSave() {
+    const projectId = this.props.params.projectId
     const data = {
       title: this.state.title,
-      suite: this.state.suite.map((test) => {title: test.title}).toArray(),
-      project: this.props.params.projectId,
+      testSuite: serializeTestSuite(this.state.testSuite).map((test) => {
+        return {title: test.title}
+      }).toArray(),
+      project: projectId,
     }
     this.props.actions.addChecklist(data);
+    this.props.history.pushState(null, `/projects/${projectId}/checklists`);
   }
 
-  appendTest() {
-    const oldSuite = this.state.suite;
-    const test = createTest()
-    this.setState({
-      suite: oldSuite.set(test.key, test)
-    });
-  }
 }
 
 ChecklistsNew.propTypes = {

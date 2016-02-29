@@ -24,7 +24,10 @@ class ChecklistsIndex extends React.Component {
         <h1 className='checklists-index-h1'>
           {projectTitle}
         </h1>
-        <ChecklistsList {...this.props} checklists={checklists}/>
+        <ChecklistsList
+          projectId={this.props.params.projectId}
+          checklists={checklists}
+        />
       </div>
     );
   }

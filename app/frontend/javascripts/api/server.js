@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {Promise} from 'es6-promise'
 import _ from 'lodash'
-import { normalize, Schema, arrayOf } from 'normalizr'
+import {flattenResponse, decamelizeKeys} from '../utils/APIHelpers'
 
 let accessToken = localStorage.getItem('checklyst:auth:accessToken')
 let clientToken = localStorage.getItem('checklyst:auth:clientToken')
@@ -30,6 +30,10 @@ const send = function(method, url, body) {
     body: JSON.stringify(body),
     headers: headers
   }).then(function(response) {
+    if (!response.ok) {
+      throw response
+    }
+
     setTokens({
       accessToken: response.headers.get('access-token'),
       clientToken: response.headers.get('client'),
@@ -37,56 +41,6 @@ const send = function(method, url, body) {
     })
     return response.json()
   })
-}
-
-const ProjectSchema = new Schema('projects')
-const UserSchema = new Schema('users')
-const ChecklistSchema = new Schema('checklists')
-
-const flattenObject = function(object) {
-  const relationships = _.reduce(object.relationships, (result, value, key) => {
-    if (_.isArray(value.data)) {
-      result[key] = _.pluck(value.data, 'id')
-    } else {
-      result[key] = value.data.id
-    }
-    return result
-  }, {})
-  return _(object)
-    .pick('id', 'type')
-    .extend(object.attributes)
-    .extend(relationships)
-    .value()
-}
-
-const flattenObjects = function(objects) {
-  if (!_.isArray(objects)) {
-    objects = [objects]
-  }
-  return _.map(objects, flattenObject)
-}
-
-const flattenResponse = function(response) {
-  let flatten = []
-  flatten.push(flattenObjects(response.data))
-  response.included && flatten.push(flattenObjects(response.included))
-
-  const entities = _(flatten)
-    .flatten()
-    .groupBy((value) => { return value.type })
-    .mapValues((value) => {
-      return _.reduce(value, (result, v) => {
-        result[v.id] = v
-        return result
-      }, {})
-    })
-    .value()
-
-  const results = _(entities)
-    .mapValues((value) => { return _.keys(value) })
-    .value()
-
-  return {results, entities}
 }
 
 const ServerAPI = {
@@ -109,7 +63,21 @@ const ServerAPI = {
 
   findProject: (projectId) => {
     return send('get', `/api/projects/${projectId}?include=checklists,user`).then(flattenResponse)
-  }
+  },
+
+  createChecklist: ({data}) => {
+    return send('post', `/api/projects/${data.project}/checklists`, {
+      data: decamelizeKeys(data)
+    }).then(flattenResponse)
+  },
+
+  findChecklist: ({projectId, checklistId}) => {
+    return send('get', `/api/projects/${projectId}/checklists/${checklistId}?include=project`).then(flattenResponse)
+  },
+
+  deleteChecklist: ({projectId, checklistId}) => {
+    return send('delete', `/api/projects/${projectId}/checklists/${checklistId}`)
+  },
 
 }
 

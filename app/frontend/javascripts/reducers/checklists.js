@@ -1,4 +1,4 @@
-import { RECEIVED_ENTITIES } from '../constants/ActionTypes'
+import { RECEIVED_ENTITIES, DELETE_CHECKLIST_SUCCESS } from '../constants/ActionTypes'
 import Immutable from 'immutable'
 
 const initialState  = new Immutable.Map()
@@ -10,7 +10,8 @@ const ChecklistRecord = Immutable.Record({
   type: 'checklists',
   title: '',
   project: null,
-  testSuite: {}
+  testSuite: {},
+  versions: new Immutable.OrderedSet()
 })
 
 const mergeChecklists = (state, checklists) => {
@@ -24,6 +25,9 @@ export default function checklists(state = initialState, action) {
     case RECEIVED_ENTITIES:
       if (!action.entities.checklists) { return state }
       return mergeChecklists(state, Immutable.fromJS(action.entities.checklists))
+
+    case DELETE_CHECKLIST_SUCCESS:
+      return state.remove(action.checklistId)
 
     default:
       return state

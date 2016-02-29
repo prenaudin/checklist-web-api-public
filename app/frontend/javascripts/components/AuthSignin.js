@@ -6,11 +6,28 @@ import * as AccountActions from '../actions/account';
 class AuthSignin extends React.Component {
   render() {
     return (
-      <div className="auth auth-signin">
+      <div className="auth auth-signin form-group">
         Sign in
-        <input type='text' defaultValue='' ref='email' placeholder='Email'/>
-        <input type='password' defaultValue='' ref='password' placeholder='Password'/>
-        <button onClick={this.handleClickSignin.bind(this)}>Sign in</button>
+        <input
+          type='text'
+          className='form-input form-input--md'
+          defaultValue=''
+          ref='email'
+          placeholder='Email'
+        />
+        <input
+          type='password'
+          className='form-input form-input--md'
+          defaultValue=''
+          ref='password'
+          placeholder='Password'
+        />
+        <button
+          className='btn btn-primary'
+          onClick={this.handleClickSignin.bind(this)}
+        >
+          Sign in
+        </button>
       </div>
     );
   }

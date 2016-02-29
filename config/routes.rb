@@ -13,6 +13,8 @@ Rails.application.routes.draw do
           post 'unshare', action: :unshare
           post 'copy',    action: :copy
         end
+
+        resources :versions, only: [:create, :update, :destroy]
       end
     end
 
