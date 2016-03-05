@@ -7,27 +7,7 @@ config = _.merge(config, {
   debug: true,
   displayErrorDetails: true,
   outputPathinfo: true,
-  devtool: 'sourcemap',
-
-  entry: [
-    './app/frontend/javascripts/index.js',
-    './app/frontend/stylesheets/application.sass',
-  ],
-
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loaders: [
-          'babel?presets[]=react,presets[]=es2015'
-        ]
-      },
-      {
-        test: /\.sass$/,
-        loader: 'style!css!sass'
-      }
-    ]
-  }
+  devtool: 'sourcemap'
 });
 
 config.plugins.push(new webpack.NoErrorsPlugin());

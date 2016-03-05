@@ -7,7 +7,7 @@ var config = module.exports = {
   context: dist,
   entry: [
     './app/frontend/javascripts/index.js',
-    './app/frontend/stylesheets/application.sass',
+    './app/frontend/stylesheets/application.scss',
   ],
 
   resolve: {
@@ -15,7 +15,7 @@ var config = module.exports = {
       path.join(dist, 'app', 'frontend', 'javascripts'),
       path.join(dist, 'app', 'frontend', 'stylesheets')
     ],
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.sass', 'config.js'],
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.scss', 'config.js'],
   },
 
   output: {
@@ -32,7 +32,7 @@ var config = module.exports = {
         loader: 'babel?presets[]=react,presets[]=es2015'
       },
       {
-        test: /\.sass$/,
+        test: /\.scss$/,
         loader: 'style!css!sass'
       }
     ],

@@ -24,11 +24,5 @@ module Api
     config.active_record.raise_in_transactional_callbacks = true
 
     config.autoload_paths += Dir["#{Rails.root}/app/contexts/**/"]
-
-    config.webpack = {
-      use_manifest: false,
-      asset_manifest: {},
-      common_manifest: {},
-    }
   end
 end
