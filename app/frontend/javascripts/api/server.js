@@ -46,7 +46,15 @@ const send = function(method, url, body) {
 const ServerAPI = {
 
   signin: ({data}) => {
-    return send('post', '/api/auth/sign_in', data)
+    return send('post', '/api/auth/sign_in', decamelizeKeys(data))
+  },
+
+  signup: ({data}) => {
+    return send('post', '/api/auth', decamelizeKeys(data))
+  },
+
+  signout: () => {
+    return send('delete', '/api/auth/sign_out')
   },
 
   validateToken: () => {

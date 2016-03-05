@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import history from './history';
+import history from '../config/history';
 import {Router, Route, Redirect} from 'react-router';
 import App from '../containers/App';
 import Home from './Home';

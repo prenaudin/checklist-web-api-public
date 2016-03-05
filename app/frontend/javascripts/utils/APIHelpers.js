@@ -51,6 +51,5 @@ export const flattenResponse = function(response) {
     .mapValues((value) => { return _.keys(value) })
     .value()
 
-  console.log(results, entities);
   return {results, entities}
 }

@@ -11,8 +11,15 @@ class HeaderAccount extends React.Component {
     return (
       <div className="header-infos">
         {this.props.account.get('email')}
+        <a href='javascript:void(0)' onClick={this.handleClickLogout.bind(this)}>
+          logout
+        </a>
       </div>
     );
+  }
+
+  handleClickLogout() {
+    this.props.actions.signout()
   }
 }
 
