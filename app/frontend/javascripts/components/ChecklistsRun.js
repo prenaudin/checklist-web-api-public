@@ -2,57 +2,73 @@ import React from 'react';
 import _ from 'lodash';
 import Immutable from 'immutable';
 import {Link} from 'react-router';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as ChecklistActions from '../actions/checklists';
+import ChecklistPoll from './ChecklistPoll';
 
 const TestRecord = Immutable.Record({
   id: null,
   title: '',
   comment: '',
   status: 'pending',
-})
+});
 
 const createTest = (params = {}) => {
-  console.log(params);
-  const testData = Object.assign({}, { id: _.uniqueId() }, params)
-  return new TestRecord(testData)
-}
+  const testData = Object.assign({}, { id: _.uniqueId() }, params);
+  return new TestRecord(testData);
+};
 
-const serializeTests = (tests) => {
-  return tests
-}
+
+const countOk = (tests) => {
+  return tests.filter(test => test.status === 'ok').size;
+};
+
+const countNok = (tests) => {
+  return tests.filter(test => test.status === 'nok').size;
+};
+
+const countPending = (tests) => {
+  return tests.filter(test => test.status === 'pending').size;
+};
 
 const initTests = (testSuite) => {
-  console.log('initTests', testSuite);
+  // console.log('initTests', testSuite);
   return _.reduce(testSuite, (memo, test) => {
-    const newTest = createTest(test)
-    return memo.set(newTest.id, newTest)
-  }, new Immutable.Map())
-}
+    const newTest = createTest(test);
+    return memo.set(newTest.id, newTest);
+  }, new Immutable.Map());
+};
 
 class ChecklistsRunTestsItem extends React.Component {
 
   render() {
     return (
-      <label className='checklists-run-label form-group'>
-        <div className='form-title'>
-          {this.props.test.title} - {this.props.test.status}
-        </div>
-        <input
-          className='checklists-run-input form-input form-input--md'
-          type='text'
-          value={this.props.test.comment}
-          onChange={this.handleChange.bind(this)}
+      <div>
+        <ChecklistPoll
+          status={this.props.test.get('status')}
+          onClickItem={this.props.onChangeTestStatus}
         />
-      </label>
+        <label className="checklists-run-label form-group">
+          <div className="form-title">
+            {this.props.test.title} - {this.props.test.status}
+          </div>
+          <input
+            className="checklists-run-input form-input form-input--md"
+            type="text"
+            value={this.props.test.comment}
+            onChange={this.handleChange.bind(this)}
+            />
+        </label>
+      </div>
     );
   }
 
   handleChange(e) {
-    this.props.onChangeTestComment(e, this.props.test.id)
+    this.props.onChangeTestComment(e, this.props.test.id);
   }
 }
+
 
 class ChecklistsRun extends React.Component {
 
@@ -61,78 +77,95 @@ class ChecklistsRun extends React.Component {
 
     this.state = {
       title: '',
-      tests: new Immutable.Map()
+      tests: new Immutable.Map(),
     };
   }
 
   componentDidMount() {
-    const {checklistId, projectId} = this.props.params
-    this.props.actions.findChecklist({checklistId, projectId})
+    const {checklistId, projectId} = this.props.params;
+    this.props.actions.findChecklist({checklistId, projectId});
   }
 
   componentWillReceiveProps(nextProps) {
-    const {checklistId} = nextProps.params
-    const checklist = nextProps.checklists.get(checklistId)
+    const {checklistId} = nextProps.params;
+    const checklist = nextProps.checklists.get(checklistId);
     if (checklist && this.state.tests.size === 0) {
       this.setState({
         title: 'v' + (checklist.get('versions').size + 1),
-        tests: initTests(checklist.get('testSuite').toJS())
-      })
+        tests: initTests(checklist.get('testSuite').toJS()),
+      });
     }
   }
 
   render() {
-    const {projectId, checklistId} = this.props.params
-    const project = this.props.projects.get(projectId)
-    const checklist = this.props.checklists.get(checklistId)
-    let testIndex = 0
+    const {projectId, checklistId} = this.props.params;
+    const project = this.props.projects.get(projectId);
+    const checklist = this.props.checklists.get(checklistId);
+    let testIndex = 0;
 
     if (!checklist) {
-      return false
+      return false;
     }
 
     return (
-      <div className='checklists-run'>
+      <div className="checklists-run">
 
-        <label className='checklists-run-label form-group'>
-          <div className='form-title'>
+        <label className="checklists-run-label form-group">
+          <div className="form-title">
             {checklist.get('title')} -
             {this.state.title}
           </div>
         </label>
 
         {
-          this.state.tests.map(((test) => {
-            testIndex++
+          this.state.tests.map(test => {
+            testIndex++;
             return (
               <ChecklistsRunTestsItem
                 key={test.id}
                 index={testIndex}
                 test={test}
+                onChangeTestStatus={(status) => this.handleChangeTestStatus({id: test.id, status})}
                 onChangeTestComment={this.handleChangeTestComment.bind(this)}
               />
             );
-          }).bind(this)).toArray()
+          }).toArray()
         }
 
-        <div className='form-footer-container'>
-          <div className='form-footer clearfix'>
-            <div className='form-resume'>
-              <div className='form-resume-count'>
-                {serializeTests(this.state.tests).size}
+        <div className="form-footer-container">
+          <div className="form-footer clearfix">
+            <div className="form-resume" style={{marginRight: '30px'}}>
+              <div className="form-resume-count" style={{color: '#7ED321', fontWeight: '300'}}>
+                {countOk(this.state.tests)}
               </div>
-              <div className='form-resume-subtitle'>
-                Tests
+              <div className="form-resume-subtitle">
+                👍
+              </div>
+            </div>
+            <div className="form-resume" style={{marginRight: '30px'}}>
+              <div className="form-resume-count" style={{color: '#F5A623', fontWeight: '300'}}>
+                {countNok(this.state.tests)}
+              </div>
+              <div className="form-resume-subtitle">
+                👎
+              </div>
+            </div>
+            <div className="form-resume" style={{marginRight: '30px'}}>
+              <div className="form-resume-count" style={{color: '#888888', fontWeight: '300'}}>
+                {countPending(this.state.tests)}
+              </div>
+              <div className="form-resume-subtitle">
+                💤
               </div>
             </div>
 
-            <div className='checklists-run-actions form-actions'>
-              <Link className='btn btn-default' to={`/projects/${projectId}/checklists`}>
+            <div className="checklists-run-actions form-actions">
+              <Link className="btn btn-default" to={`/projects/${projectId}/checklists`}>
                 Cancel
               </Link>
               <a
-                href='javascript:void'
-                className='btn btn-primary'
+                href="javascript:void"
+                className="btn btn-primary"
                 onClick={this.handleClickSave.bind(this)}
               >
                 Save
@@ -148,47 +181,47 @@ class ChecklistsRun extends React.Component {
     this.setState({title: e.target.value});
   }
 
+  handleChangeTestStatus({id, status}) {
+    this.setState({tests: this.state.tests.setIn([id, 'status'], status)});
+  }
+
   handleChangeTestComment(e, id) {
     const newComment = e.target.value;
     const oldTests = this.state.tests;
     this.setState({
-      tests: oldTests.set(id, oldSuite.get(id).set('comment', newComment))
+      tests: oldTests.set(id, oldSuite.get(id).set('comment', newComment)),
     });
   }
 
   handleClickSave() {
-    const projectId = this.props.params.projectId
+    const {projectId, checklistId} = this.props.params;
     const data = {
       title: this.state.title,
-      testSuite: serializeTestSuite(this.state.testSuite).map((test) => {
-        return {title: test.title}
-      }).toArray(),
-      project: projectId,
-    }
-    this.props.actions.addChecklist(data);
-    this.props.history.pushState(null, `/projects/${projectId}/checklists`);
+      tests: this.state.tests.toList().toJS(),
+    };
+    this.props.actions.createVersion({projectId, checklistId, data});
   }
 
 }
 
 ChecklistsRun.propTypes = {
-  actions: React.PropTypes.object.isRequired
-}
+  actions: React.PropTypes.object.isRequired,
+};
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     checklists: state.checklists,
-    projects: state.projects
-  }
+    projects: state.projects,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(ChecklistActions, dispatch)
-  }
+    actions: bindActionCreators(ChecklistActions, dispatch),
+  };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChecklistsRun)
+)(ChecklistsRun);

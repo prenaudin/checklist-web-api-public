@@ -87,6 +87,12 @@ const ServerAPI = {
     return send('delete', `/api/projects/${projectId}/checklists/${checklistId}`)
   },
 
-}
+  createVersion: ({projectId, checklistId, data}) => {
+    return send('post', `/api/projects/${projectId}/checklists/${checklistId}/versions`, {
+      data: decamelizeKeys(data),
+    }).then(flattenResponse);
+  },
 
-export default ServerAPI
+};
+
+export default ServerAPI;

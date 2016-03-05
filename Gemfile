@@ -13,6 +13,9 @@ gem 'devise', '~> 3.5.3'
 gem 'devise_token_auth'
 gem 'omniauth'
 gem 'gravatarify', '~> 3.1.1'
+gem 'pry'
+gem 'pry-remote'
+gem 'pry-byebug'
 
 group :development, :test do
   gem 'foreman'
