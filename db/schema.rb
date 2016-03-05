@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20160228104551) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "project_id"
-    t.json     "test_suite", default: {},    null: false
+    t.jsonb    "test_suite", default: {},    null: false
     t.boolean  "is_public",  default: false, null: false
   end
 
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20160228104551) do
     t.string   "nickname"
     t.string   "image"
     t.string   "email"
-    t.json     "tokens"
+    t.jsonb    "tokens"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20160228104551) do
     t.string   "title"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.json     "tests",        default: {}, null: false
+    t.jsonb    "tests",        default: {}, null: false
     t.integer  "checklist_id"
   end
 
