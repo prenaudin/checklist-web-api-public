@@ -1,15 +1,52 @@
 var webpack = require('webpack');
-var _ = require('lodash');
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var extractApplicationStyle = new ExtractTextPlugin('../stylesheets/application.css');
 
-var config = module.exports = require('./main.config.js');
+var dist = path.join(__dirname, '../', '../');
 
-config.output = _.merge(config.output, {
-  path: path.join(config.context, 'public', 'assets'),
-  filename: 'application-[hash].js',
-});
+module.exports = {
+  context: dist,
+  entry: [
+    './app/frontend/javascripts/index.js',
+    './app/frontend/stylesheets/application.scss',
+  ],
 
-config.plugins.push(
-  new webpack.optimize.UglifyJsPlugin(),
-  new webpack.optimize.OccurenceOrderPlugin()
-);
+  resolve: {
+    root: [
+      path.join(dist, 'app', 'frontend', 'javascripts'),
+      path.join(dist, 'app', 'frontend', 'stylesheets')
+    ],
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.sass', 'config.js'],
+  },
+
+  output: {
+    path: path.join(dist, 'app', 'assets', 'javascripts'),
+    filename: 'application.js',
+  },
+
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: [
+          'babel?presets[]=react,presets[]=es2015'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        loader: extractApplicationStyle.extract(['css', 'sass'])
+      }
+    ]
+  },
+
+  plugins: [
+    extractApplicationStyle,
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.ProvidePlugin({
+      'Promise': 'es6-promise',
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
+  ]
+};
