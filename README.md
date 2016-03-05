@@ -7,6 +7,7 @@ Then for the dependencies :
 ```
 npm install
 bundle install
+bundle exec rake db:setup db:migrate
 ```
 
 # Launch
