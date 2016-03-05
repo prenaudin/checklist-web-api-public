@@ -1,40 +1,38 @@
-import * as types from '../constants/ActionTypes'
-import store from '../store/store'
-import api from '../api/api'
-import _ from 'lodash'
-import history from '../config/history'
+import * as types from '../constants/ActionTypes';
+import api from '../api/api';
+import history from '../config/history';
 
 export function signin(data) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return api.signin({data}).then((resp) => {
-      dispatch({ type: types.SIGNIN, data: resp.data })
-      history.pushState(null, '/projects')
-    })
-  }
+      dispatch({ type: types.SIGNIN, data: resp.data });
+      history.pushState(null, '/projects');
+    });
+  };
 }
 
 export function signup(data) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return api.signup({data}).then((resp) => {
-      dispatch({ type: types.SIGNUP, data: resp.data })
-      history.pushState(null, '/projects')
-    })
-  }
+      dispatch({ type: types.SIGNUP, data: resp.data });
+      history.pushState(null, '/projects');
+    });
+  };
 }
 
-export function signout(data) {
-  return (dispatch, getState) => {
-    return api.signout().then((resp) => {
-      dispatch({ type: types.SIGNOUT, data: {} })
-      history.pushState(null, '/home')
-    })
-  }
+export function signout() {
+  return (dispatch) => {
+    return api.signout().then(() => {
+      dispatch({ type: types.SIGNOUT, data: {} });
+      history.pushState(null, '/home');
+    });
+  };
 }
 
 export function validateToken() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return api.validateToken().then((resp) => {
-      dispatch({ type: types.SIGNIN, data: resp.data })
-    })
-  }
+      dispatch({ type: types.SIGNIN, data: resp.data });
+    });
+  };
 }
