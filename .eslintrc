@@ -15,3 +15,4 @@ rules:
   react/sort-comp: 0
   jsx-quotes: 1
   id-length: [2, {"exceptions": ["e", "i", "_", "S"]}]
+  new-cap: 0
