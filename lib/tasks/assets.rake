@@ -1,5 +1,6 @@
 Rake::Task['assets:precompile']
   .clear_prerequisites
+  .clear
   .enhance(['assets:compile_environment'])
 
 namespace :assets do
