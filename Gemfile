@@ -26,3 +26,7 @@ group :test do
   gem 'rspec_api_documentation'
   gem 'json_matchers'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
