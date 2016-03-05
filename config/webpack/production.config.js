@@ -1,5 +1,4 @@
 var webpack = require('webpack');
-var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var _ = require('lodash');
 var path = require('path');
 
