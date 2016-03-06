@@ -1,5 +1,5 @@
 class AddTestsToVersions < ActiveRecord::Migration
   def change
-    add_column :versions, :tests, :json, default: {}, null: false
+    add_column :versions, :tests, :jsonb, default: {}, null: false
   end
 end
