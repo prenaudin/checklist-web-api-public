@@ -1,9 +1,5 @@
-class UserCreateProjectContext
+class UserCreateProjectContext < BaseContext
   attr_reader :user, :params
-
-  def self.call(user_id, params)
-    new(user_id, params).call
-  end
 
   def initialize(user_id, given_params)
     @user = User.find(user_id)
