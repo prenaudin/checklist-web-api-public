@@ -1,9 +1,17 @@
+# PostgreSQL. Versions 9.1 and up are supported.
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV['DATABASE_POOL'] || ENV['RAILS_MAX_THREADS'] || ENV['PUMA_MAX_THREADS'] || 5 %>
+
 development:
-  url: postgres://localhost/checklyst_development
+  <<: *default
+  database: checklist_web_api_development
 
 test:
-  url: postgres://localhost/checklyst_test
+  <<: *default
+  database: checklist_web_api_test
 
 production:
-  url:  <%= ENV['DATABASE_URL'] %>
-  pool: <%= ENV['DATABASE_POOL'] || ENV['PUMA_MAX_THREADS'] || 5 %>
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

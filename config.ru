@@ -1,14 +1,8 @@
 # This file is used by Rack-based servers to start the application.
 
 require ::File.expand_path('../config/environment', __FILE__)
-run Rails.application
 
-use Rack::Cors do
-  allow do
-    origins '*'
-    resource '*',
-      headers: :any,
-      expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-      methods: [:get, :post, :put, :delete, :options]
-  end
-end
+# Action Cable requires that all classes are loaded in advance
+Rails.application.eager_load!
+
+run Rails.application
