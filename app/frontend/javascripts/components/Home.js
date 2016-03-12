@@ -1,17 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router';
-import AuthSignin from './AuthSignin';
-import AuthSignup from './AuthSignup';
 
 class Home extends React.Component {
   render() {
     return (
       <div className="home page">
-        <h1>
-          Checklyst
-        </h1>
-        <h3>
-          Checklist for a safer future
+
+        <h3 className="home-tagline">
+          Checklist for a safer future.
+          Do things.
         </h3>
 
         <p>
@@ -19,9 +16,6 @@ class Home extends React.Component {
             My Projects
           </Link>
         </p>
-
-        <AuthSignin/>
-        <AuthSignup/>
       </div>
     );
   }

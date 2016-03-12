@@ -5,10 +5,7 @@ run Rails.application
 
 use Rack::Cors do
   allow do
-    origins(/.*\.dev/)
-
-    resource '*',
-             headers: :any,
-             methods: [:get, :put, :post, :patch, :delete, :options]
+    origins '*'
+    resource '*', headers: :any, methods: [:get, :post, :put, :delete, :options]
   end
 end

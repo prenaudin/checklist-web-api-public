@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import history from '../config/history';
 import {Router, Route, Redirect} from 'react-router';
 import App from '../containers/App';
+
 import Home from './Home';
+import HeaderHome from './HeaderHome';
+
 import ProjectsIndex from './ProjectsIndex';
+
+import AuthSignup from './AuthSignup';
+import AuthSignin from './AuthSignin';
+
 
 import ProjectsNew from './ProjectsNew';
 import HeaderProjectsNew from './HeaderProjectsNew';
@@ -24,7 +31,9 @@ class AppRouter extends Component {
     return (
       <Router history={history}>
         <Route component={App}>
-          <Route path="home" component={Home}/>
+          <Route path="home" components={{content: Home, header: HeaderHome}}/>
+          <Route path="signup" component={AuthSignup}/>
+          <Route path="signin" component={AuthSignin}/>
           <Route path="projects" component={ProjectsIndex}/>
           <Route
             path="projects/new"
@@ -43,7 +52,7 @@ class AppRouter extends Component {
             components={{ content: ChecklistsRun, header: HeaderChecklistsRun }}
           />
           <Route path="projects/:projectId/edit" component={ProjectsEdit}/>
-          <Redirect from='/' to='/home'/>
+          <Redirect from="/" to="/home"/>
         </Route>
       </Router>
     );

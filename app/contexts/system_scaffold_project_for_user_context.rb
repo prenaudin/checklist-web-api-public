@@ -1,9 +1,5 @@
-class SystemScaffoldProjectForUserContext
+class SystemScaffoldProjectForUserContext < BaseContext
   attr_reader :user
-
-  def self.call(user_id)
-    new(user_id).call
-  end
 
   def initialize(user_id)
     @user = User.find(user_id)
@@ -11,16 +7,13 @@ class SystemScaffoldProjectForUserContext
 
   def call
     # Create a new Sample Project
-    project = Project.new(title: 'Sample Project', user_id: user.id)
-    project.save!
+    project = user.projects.create!(title: 'Sample Project')
 
     # Create Launch Website Checklist
-    checklist_website = Checklist.new(title: 'Launch Website', project_id: project.id)
-    checklist_website.save!
+    checklist_website = project.checklists.create!(title: 'Launch Website', test_suite: [])
 
     # Create House Cleaning Checklist
-    checklist_house = Checklist.new(title: 'House Cleaning', project_id: project.id)
-    checklist_house.save!
+    checklist_house = project.checklists.create!(title: 'House Cleaning', test_suite: [])
 
     user
   end
