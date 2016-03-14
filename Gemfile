@@ -1,27 +1,33 @@
 source 'https://rubygems.org'
 ruby '2.3.0'
 
-gem 'puma'
-gem 'rack-cors', require: 'rack/cors'
+gem 'rails', '>= 5.0.0.beta3', '< 5.1'
+gem 'pg', '~> 0.18'
 
-gem 'pg'
+# Use Redis adapter to run Action Cable in production
+# gem 'redis', '~> 3.0'
 
-gem 'rails', '4.2.5'
-gem 'rails-api', '~> 0.4.0'
+gem 'devise', '4.0.0.rc1'
+gem 'devise_token_auth', github: 'lynndylanhurley/devise_token_auth',
+                         branch: 'master'
 gem 'active_model_serializers', '~> 0.10.0.rc3'
-gem 'devise', '~> 3.5.3'
-gem 'devise_token_auth'
 gem 'omniauth'
-gem 'gravatarify', '~> 3.1.1'
-gem 'pry'
-gem 'pry-remote'
-gem 'pry-byebug'
+
+gem 'puma'
+gem 'rack-cors'
+
+gem 'rake', '~> 10.0.0'
 
 group :development, :test do
   gem 'foreman'
-  gem 'byebug'
+  gem 'pry-byebug'
+  gem 'pry-remote'
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :development do
+  gem 'listen', '~> 3.0.5'
 end
 
 group :test do
