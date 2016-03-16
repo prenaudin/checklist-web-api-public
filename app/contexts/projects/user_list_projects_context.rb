@@ -1,9 +1,5 @@
-class UserListProjectsContext
+class UserListProjectsContext < ApplicationContext
   attr_reader :user
-
-  def self.call(user_id)
-    new(user_id).call
-  end
 
   def initialize(user_id)
     @user = User.find(user_id)

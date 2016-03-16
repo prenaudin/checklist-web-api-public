@@ -1,4 +1,4 @@
-class UserCreateProjectContext < BaseContext
+class UserCreateProjectContext < ApplicationContext
   attr_reader :user, :params
 
   def initialize(user_id, given_params)

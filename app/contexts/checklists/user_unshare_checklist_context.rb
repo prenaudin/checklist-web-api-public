@@ -1,9 +1,5 @@
-class UserUnshareChecklistContext
+class UserUnshareChecklistContext < ApplicationContext
   attr_reader :user, :project, :checklist, :params
-
-  def self.call(user_id, project_id, checklist_id)
-    new(user_id, project_id, checklist_id).call
-  end
 
   def initialize(user_id, project_id, checklist_id)
     @user = User.find(user_id)
