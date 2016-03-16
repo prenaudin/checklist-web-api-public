@@ -1,4 +1,4 @@
-class SystemScaffoldProjectForUserContext < BaseContext
+class SystemScaffoldProjectForUserContext < ApplicationContext
   attr_reader :user
 
   def initialize(user_id)

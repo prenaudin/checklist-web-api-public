@@ -1,4 +1,4 @@
-class UserCreateVersionContext < BaseContext
+class UserCreateVersionContext < ApplicationContext
   attr_reader :checklist, :user, :project, :params
 
   def initialize(user_id, project_id, checklist_id, given_params)

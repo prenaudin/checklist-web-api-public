@@ -1,4 +1,4 @@
-class UserUpdateVersionContext < BaseContext
+class UserUpdateVersionContext < ApplicationContext
   attr_reader :version
 
   def initialize(user_id, project_id, checklist_id, version_id, data)
