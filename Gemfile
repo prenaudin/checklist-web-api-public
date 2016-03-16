@@ -18,6 +18,8 @@ gem 'rack-cors'
 
 gem 'rake', '~> 10.0.0'
 
+gem 'skylight'
+
 group :development, :test do
   gem 'foreman'
   gem 'pry-byebug'

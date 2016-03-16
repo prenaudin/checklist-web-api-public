@@ -17,6 +17,9 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
+    },
+    "SKYLIGHT_AUTHENTICATION": {
+      "required": false
     }
   },
   "addons": [

@@ -182,6 +182,8 @@ GEM
       json (~> 1.4, >= 1.4.6)
       mustache (~> 0.99, >= 0.99.4)
       rspec (>= 3.0.0)
+    skylight (0.10.3)
+      activesupport (>= 3.0.0)
     slop (3.6.0)
     sprockets (3.5.2)
       concurrent-ruby (~> 1.0)
@@ -223,6 +225,7 @@ DEPENDENCIES
   rake (~> 10.0.0)
   rspec-rails
   rspec_api_documentation
+  skylight
 
 BUNDLED WITH
    1.11.2
