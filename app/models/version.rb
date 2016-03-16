@@ -1,4 +1,4 @@
-class Version < ActiveRecord::Base
+class Version < ApplicationRecord
   belongs_to :checklist
   default_scope { order('created_at DESC') }
 
