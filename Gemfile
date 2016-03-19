@@ -30,6 +30,7 @@ end
 
 group :development do
   gem 'listen', '~> 3.0.5'
+  gem 'annotate'
 end
 
 group :test do
