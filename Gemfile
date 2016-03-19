@@ -26,6 +26,7 @@ group :development, :test do
   gem 'pry-remote'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'guard-rspec', require: false
 end
 
 group :development do
@@ -34,7 +35,12 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails'
+  gem 'rspec',              github: 'rspec/rspec'
+  gem 'rspec-rails',        github: 'rspec/rspec-rails'
+  gem 'rspec-core',         github: 'rspec/rspec-core'
+  gem 'rspec-support',      github: 'rspec/rspec-support'
+  gem 'rspec-expectations', github: 'rspec/rspec-expectations'
+  gem 'rspec-mocks',        github: 'rspec/rspec-mocks'
   gem 'rspec_api_documentation'
   gem 'json_matchers'
 end
