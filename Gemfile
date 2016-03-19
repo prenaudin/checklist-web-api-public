@@ -41,7 +41,7 @@ group :test do
   gem 'rspec-support',      github: 'rspec/rspec-support'
   gem 'rspec-expectations', github: 'rspec/rspec-expectations'
   gem 'rspec-mocks',        github: 'rspec/rspec-mocks'
-  gem 'rspec_api_documentation'
+  gem 'rspec_api_documentation', github: 'zipmark/rspec_api_documentation'
   gem 'json_matchers'
 end
 
