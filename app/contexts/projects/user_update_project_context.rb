@@ -1,15 +1,15 @@
 class UserUpdateProjectContext < ApplicationContext
   attr_reader :user, :project, :params
 
-  def initialize(user_id, project_id, given_params)
-    @user = User.find(user_id)
-    @project = Project.find(project_id)
-    @params = given_params.symbolize_keys
-    #TODO Check Authorization
+  def initialize(user_id:, project_id:, params:)
+    user     = UserRepository.find(user_id)
+    @project = ProjectRepository.find_with_user(user: user,
+                                                project_id: project_id)
+    @params  = coerce_to_params(params).permit(:title)
   end
 
   def call
-    project.update_attributes!(params)
+    ProjectRepository.update(project, params)
     project
   end
 end

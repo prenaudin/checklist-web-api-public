@@ -1,16 +1,15 @@
 class UserCreateProjectContext < ApplicationContext
   attr_reader :user, :params
 
-  def initialize(user_id, given_params)
-    @user = User.find(user_id)
-    @params = given_params.symbolize_keys
+  def initialize(user_id:, params:)
+    @user   = User.find(user_id)
+    @params = coerce_to_params(params).permit(:title)
   end
 
   def call
-    project = Project.new
-    project.user = user
-    project.title = params[:title]
-    project.save!
+    project       = Project.new(params)
+    project.user  = user
+    ProjectRepository.create(project)
     project
   end
 end
