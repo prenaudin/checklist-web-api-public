@@ -1,7 +1,5 @@
 module Api
   class ProjectsController < Api::BaseController
-    before_action :authenticate_user!
-
     def index
       projects = UserListProjectsContext.call(user_id: current_user.id)
       render(json: projects,

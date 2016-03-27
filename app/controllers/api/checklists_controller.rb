@@ -1,7 +1,5 @@
 module Api
   class ChecklistsController < Api::BaseController
-    before_action :authenticate_user!
-
     def index
       checklists = UserListChecklistsContext.call(current_user.id, params[:project_id])
       render json: checklists, each_serializer: Api::ChecklistSerializer, root: 'data', include: params[:include]
