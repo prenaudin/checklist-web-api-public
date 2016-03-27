@@ -1,7 +1,5 @@
 module Api
   class VersionsController < Api::BaseController
-    before_action :authenticate_user!
-
     def create
       checklist = UserCreateVersionContext.call(current_user.id, params[:project_id], params[:checklist_id], params[:data])
       render json: checklist, serializer: Api::ChecklistSerializer, root: 'data'

@@ -16,6 +16,7 @@ class Checklist < ApplicationRecord
   has_many :versions
 
   validates :title, presence: true
+  validates :test_suite, array_of_strings: true
 
   def last_version
     versions.last

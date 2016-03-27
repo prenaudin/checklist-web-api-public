@@ -5,7 +5,11 @@ RSpec.describe UserUpdateProjectContext do
   let(:params)   { ActionController::Parameters.new(title: 'Azendoo') }
 
   it 'raises an error if the project is not managed by the user' do
-    expect { described_class.call(user_id: user_bis.id, project_id: project.id, params: params) }
+    expect do
+      described_class.call(user_id: user_bis.id,
+                           project_id: project.id,
+                           params: params)
+    end
       .to raise_error(ActiveRecord::RecordNotFound)
   end
 

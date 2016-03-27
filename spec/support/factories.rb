@@ -27,4 +27,14 @@ module Factories
     UserCreateProjectContext.call(user_id: user.id,
                                   params: { title: title })
   end
+
+  def self.create_checklist(user:,
+                            project:,
+                            title: 'QA',
+                            test_suite: ['Task 1', 'Task 2', 'Task 3'])
+    UserCreateChecklistContext.call(user_id: user.id,
+                                    project_id: project.id,
+                                    params: { title: title,
+                                              test_suite: test_suite })
+  end
 end
