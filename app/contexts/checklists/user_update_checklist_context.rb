@@ -1,18 +1,18 @@
 class UserUpdateChecklistContext < ApplicationContext
-  attr_reader :user, :project, :checklist, :params
+  attr_reader :checklist, :params
 
-  def initialize(user_id, project_id, checklist_id, given_params)
-    @user = User.find(user_id)
-    @project = Project.find(project_id)
-    #TODO Check Authorization
-    @checklist = Checklist.find(checklist_id)
-    @params = given_params.symbolize_keys
+  def initialize(user_id:, project_id:, checklist_id:, params:)
+    user       = UserRepository.find(user_id)
+    project    = ProjectRepository.find_with_user(user: user,
+                                                  project_id: project_id)
+    @checklist = ChecklistRepository
+                 .find_with_project(project: project,
+                                    checklist_id: checklist_id)
+    @params    = coerce_to_params(params).permit(:title, test_suite: [])
   end
 
   def call
-    checklist.title = params[:title]
-    checklist.test_suite = params[:test_suite]
-    checklist.save!
+    ChecklistRepository.update(checklist, params)
     checklist
   end
 end
