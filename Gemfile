@@ -16,7 +16,7 @@ gem 'omniauth'
 gem 'puma'
 gem 'rack-cors'
 
-gem 'rake', '~> 10.0.0'
+gem 'rake', '> 10'
 
 gem 'skylight'
 
@@ -42,7 +42,6 @@ group :test do
   gem 'rspec-expectations', github: 'rspec/rspec-expectations'
   gem 'rspec-mocks',        github: 'rspec/rspec-mocks'
   gem 'rspec_api_documentation', github: 'zipmark/rspec_api_documentation'
-  gem 'json_matchers'
 end
 
 group :production do
