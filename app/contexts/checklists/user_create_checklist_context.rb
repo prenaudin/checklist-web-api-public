@@ -10,9 +10,7 @@ class UserCreateChecklistContext < ApplicationContext
 
   def call
     checklist = Checklist.new(params)
-    checklist.project    = project
-    checklist.title      = params[:title]
-    checklist.test_suite = params[:test_suite]
+    checklist.project = project
     checklist.save!
     checklist
   end
