@@ -6,9 +6,8 @@ class UserShowChecklistContext < ApplicationContext
     project = ProjectRepository.find_with_user(user: user,
                                                project_id: project_id)
     @checklist = ChecklistRepository
-                 .find_with_user_and_project(user: user,
-                                             project: project,
-                                             checklist_id: checklist_id)
+                 .find_with_project(project: project,
+                                    checklist_id: checklist_id)
   end
 
   def call
