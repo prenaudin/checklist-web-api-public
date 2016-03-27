@@ -1,11 +1,13 @@
 class UserUnshareChecklistContext < ApplicationContext
-  attr_reader :user, :project, :checklist, :params
+  attr_reader :checklist
 
-  def initialize(user_id, project_id, checklist_id)
-    @user = User.find(user_id)
-    @project = Project.find(project_id)
-    #TODO Check Authorization
-    @checklist = Checklist.find(checklist_id)
+  def initialize(user_id:, project_id:, checklist_id:)
+    user       = UserRepository.find(user_id)
+    project    = ProjectRepository.find_with_user(user: user,
+                                                  project_id: project_id)
+    @checklist = ChecklistRepository
+                 .find_with_project(project: project,
+                                    checklist_id: checklist_id)
   end
 
   def call
