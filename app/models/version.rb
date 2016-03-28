@@ -15,5 +15,5 @@ class Version < ApplicationRecord
   default_scope { order('created_at DESC') }
 
   validates :title, presence: true
-  validates :tests, presence: true
+  validates :tests, presence: true, array_of_hashes: true
 end
