@@ -1,17 +1,29 @@
 module Api
   class VersionsController < Api::BaseController
     def create
-      checklist = UserCreateVersionContext.call(current_user.id, params[:project_id], params[:checklist_id], params[:data])
-      render json: checklist, serializer: Api::ChecklistSerializer, root: 'data'
+      version = UserCreateVersionContext
+                .call(user_id: current_user.id,
+                      project_id: params[:project_id],
+                      checklist_id: params[:checklist_id],
+                      params: params[:data])
+      render(json: version, serializer: Api::VersionSerializer, root: 'data')
     end
 
     def update
-      checklist = UserUpdateVersionContext.call(current_user.id, params[:project_id], params[:checklist_id], params[:id], params[:data])
-      render json: checklist, serializer: Api::ChecklistSerializer, root: 'data'
+      version = UserUpdateVersionContext
+                .call(user_id: current_user.id,
+                      project_id: params[:project_id],
+                      checklist_id: params[:checklist_id],
+                      version_id: params[:id],
+                      params: params[:data])
+      render(json: version, serializer: Api::VersionSerializer, root: 'data')
     end
 
     def destroy
-      UserDeleteVersionContext.call(current_user.id, params[:project_id], params[:checklist_id], params[:id])
+      UserDeleteVersionContext.call(user_id: current_user.id,
+                                    project_id: params[:project_id],
+                                    checklist_id: params[:checklist_id],
+                                    version_id: params[:id])
       head :ok
     end
   end
