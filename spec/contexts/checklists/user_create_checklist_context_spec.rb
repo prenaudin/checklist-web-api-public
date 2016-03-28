@@ -2,7 +2,6 @@ RSpec.describe UserCreateChecklistContext do
   let(:user)        { Factories.create_user }
   let(:user_bis)    { Factories.create_user }
   let(:project)     { Factories.create_project(user: user) }
-  let(:project_bis) { Factories.create_project(user: user) }
   let(:test_suite) { ['Task 1', 'Task 2', 'Task 3'] }
   let(:params) do
     {
