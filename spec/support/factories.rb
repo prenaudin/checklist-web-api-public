@@ -37,4 +37,23 @@ module Factories
                                     params: { title: title,
                                               test_suite: test_suite })
   end
+
+  def self.create_version(user:,
+                          project:,
+                          checklist:,
+                          title: 'Website',
+                          tests: [
+                            {
+                              'id'           => '1',
+                              'title'        => 'Deploy',
+                              'comment'      => '',
+                              'status'       => 'ok',
+                              'show_comment' => false
+                            }])
+    UserCreateVersionContext.call(user_id: user.id,
+                                  project_id: project.id,
+                                  checklist_id: checklist.id,
+                                  params: { title: title,
+                                            tests: tests })
+  end
 end

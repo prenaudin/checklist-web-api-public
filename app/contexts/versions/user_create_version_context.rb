@@ -1,15 +1,33 @@
 class UserCreateVersionContext < ApplicationContext
-  attr_reader :checklist, :user, :project, :params
+  attr_reader :checklist, :params
 
-  def initialize(user_id, project_id, checklist_id, given_params)
-    @user = User.find(user_id)
-    @project = user.projects.find(project_id)
-    @checklist = project.checklists.find(checklist_id)
-    @params = given_params.symbolize_keys
+  def initialize(user_id:, project_id:, checklist_id:, params:)
+    user = UserRepository.find(user_id)
+    project = ProjectRepository.find_with_user(user: user,
+                                               project_id: project_id)
+    @checklist = ChecklistRepository
+                 .find_with_project(project: project,
+                                    checklist_id: checklist_id)
+    @params = coerce_to_params(params).permit(:title,
+                                              tests: permitted_fields)
   end
 
   def call
-    checklist.versions.create(params)
-    checklist
+    version           = Version.new(params)
+    version.checklist = checklist
+    VersionRepository.create(version)
+    version
+  end
+
+  private
+
+  def permitted_fields
+    [
+      :id,
+      :title,
+      :comment,
+      :status,
+      :show_comment
+    ]
   end
 end
