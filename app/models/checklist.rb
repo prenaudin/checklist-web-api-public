@@ -19,6 +19,6 @@ class Checklist < ApplicationRecord
   validates :test_suite, array_of_strings: true
 
   def last_version
-    versions.last
+    versions.order("created_at").first
   end
 end
