@@ -2,7 +2,7 @@ class UserShareChecklistContext < ApplicationContext
   attr_reader :checklist
 
   def initialize(user_id:, project_id:, checklist_id:)
-    user       = UserRepository.find(user_id)
+    user       = UserRepository.find(id: user_id)
     project    = ProjectRepository.find_with_user(user: user,
                                                   project_id: project_id)
     @checklist = ChecklistRepository
@@ -11,8 +11,7 @@ class UserShareChecklistContext < ApplicationContext
   end
 
   def call
-    checklist.is_public = true
-    checklist.save!
+    ChecklistRepository.update(model: checklist, params: { is_public: true })
     checklist
   end
 end

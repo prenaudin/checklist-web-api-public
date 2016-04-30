@@ -2,7 +2,7 @@ class UserUpdateVersionContext < ApplicationContext
   attr_reader :version, :params
 
   def initialize(user_id:, project_id:, checklist_id:, version_id:, params:)
-    user = UserRepository.find(user_id)
+    user = UserRepository.find(id: user_id)
     project = ProjectRepository.find_with_user(user: user,
                                                project_id: project_id)
     checklist = ChecklistRepository
@@ -16,7 +16,7 @@ class UserUpdateVersionContext < ApplicationContext
   end
 
   def call
-    VersionRepository.update(version, params)
+    VersionRepository.update(model: version, params: params)
     version
   end
 

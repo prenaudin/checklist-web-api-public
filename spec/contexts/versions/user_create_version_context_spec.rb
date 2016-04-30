@@ -15,7 +15,7 @@ RSpec.describe UserCreateVersionContext do
     { title: 'Website', tests: [test] }
   end
 
-  it 'create a version' do
+  it 'creates a version' do
     expect do
       described_class.call(user_id: user.id,
                            project_id: project.id,
