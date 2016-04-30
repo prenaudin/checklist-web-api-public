@@ -3,21 +3,21 @@ module ApplicationRepository
     raise 'Not Implemented'
   end
 
-  def create(model)
+  def create(model:)
     verify_model!(model)
     model.save!
   end
 
-  def find(id)
+  def find(id:)
     model_class.find(id)
   end
 
-  def destroy(model)
+  def destroy(model:)
     verify_model!(model)
     model.destroy!
   end
 
-  def update(model, params)
+  def update(model:, params:)
     verify_model!(model)
     model.update_attributes!(params)
   end
