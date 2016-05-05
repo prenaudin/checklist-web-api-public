@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     get '*unmatched_route', to: 'base#not_found'
   end
 
+  namespace :public, path: 'public', defaults: { format: :json } do
+    resources :versions, only: [:show]
+  end
+
   root to: redirect('/api/auth/validate_token')
 
   # Serve websocket cable requests in-process
