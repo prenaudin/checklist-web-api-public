@@ -22,6 +22,6 @@ class UserShareVersionContext < ApplicationContext
   private
 
   def new_token
-    SecureRandom.urlsafe_base64
+    SecureRandom.hex(12)
   end
 end

@@ -17,4 +17,5 @@ class Version < ApplicationRecord
 
   validates :title, presence: true
   validates :tests, presence: true, array_of_hashes: true
+  validates :public_token, uniqueness: true
 end
