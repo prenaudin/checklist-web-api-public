@@ -6,6 +6,7 @@ RSpec.describe UserCreateChecklistContext do
   let(:params) do
     {
       title: 'QA',
+      description: 'This is a description test',
       test_suite: test_suite
     }
   end
@@ -31,6 +32,13 @@ RSpec.describe UserCreateChecklistContext do
                                      project_id: project.id,
                                      params: params)
     expect(checklist.test_suite).to eq(test_suite)
+  end
+
+  it 'creates the checklist with a description' do
+    checklist = described_class.call(user_id: user.id,
+                                     project_id: project.id,
+                                     params: params)
+    expect(checklist.description).to eq('This is a description test')
   end
 
   it 'raises an error if the project is not managed by the user' do

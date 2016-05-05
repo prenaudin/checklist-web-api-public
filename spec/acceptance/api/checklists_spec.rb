@@ -61,6 +61,7 @@ RSpec.resource 'Checklists' do
     let(:id)         { checklist.id }
     let(:raw_post) do
       { data: { title: 'QA Frontend',
+                description: 'Test description',
                 test_suite: ['Task 1', 'Task 2', 'Task 3'] } }.to_json
     end
     example_request 'Update Checklist' do
