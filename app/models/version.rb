@@ -8,6 +8,7 @@
 #  updated_at   :datetime         not null
 #  tests        :jsonb            default("{}"), not null
 #  checklist_id :integer
+#  public_token :string
 #
 
 class Version < ApplicationRecord
