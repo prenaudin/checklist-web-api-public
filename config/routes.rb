@@ -7,12 +7,6 @@ Rails.application.routes.draw do
 
     resources :projects, only: [:index, :show, :create, :update, :destroy] do
       resources :checklists, only: [:index, :show, :create, :update, :destroy] do
-        member do
-          post 'share',   action: :share
-          post 'unshare', action: :unshare
-          post 'copy',    action: :copy
-        end
-
         resources :versions, only: [:index, :show, :create, :update, :destroy]
       end
     end
