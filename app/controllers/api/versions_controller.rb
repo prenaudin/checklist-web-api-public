@@ -9,6 +9,17 @@ module Api
       render(json: version, serializer: Api::VersionSerializer, root: 'data')
     end
 
+    def index
+      versions = UserListVersionsContext
+                 .call(user_id: current_user.id,
+                       project_id: params[:project_id],
+                       checklist_id: params[:checklist_id])
+      render(json: versions,
+             each_serializer: Api::VersionSerializer,
+             root: 'data',
+             include: params[:include])
+    end
+
     def update
       version = UserUpdateVersionContext
                 .call(user_id: current_user.id,

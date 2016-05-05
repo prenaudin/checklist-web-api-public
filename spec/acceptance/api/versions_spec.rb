@@ -28,6 +28,15 @@ RSpec.resource 'Versions' do
   let(:expiry)        { token_headers['expiry'] }
   let(:uid)           { token_headers['uid'] }
 
+  get '/api/projects/:project_id/checklists/:checklist_id/versions' do
+    let(:project_id)   { project.id }
+    let(:checklist_id) { checklist.id }
+
+    example_request 'List Versions' do
+      expect(status).to eq(200)
+    end
+  end
+
   post '/api/projects/:project_id/checklists/:checklist_id/versions' do
     parameter :'data.title', "The Version's title"
     parameter :'data.test_suite', 'An array of tests'
