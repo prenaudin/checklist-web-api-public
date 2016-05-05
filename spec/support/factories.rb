@@ -44,6 +44,7 @@ module Factories
                           project:,
                           checklist:,
                           title: 'Website',
+                          public_token: nil,
                           tests: [
                             {
                               'id'           => '1',
@@ -52,10 +53,15 @@ module Factories
                               'status'       => 'ok',
                               'show_comment' => false
                             }])
-    UserCreateVersionContext.call(user_id: user.id,
-                                  project_id: project.id,
-                                  checklist_id: checklist.id,
-                                  params: { title: title,
-                                            tests: tests })
+    version = UserCreateVersionContext.call(user_id: user.id,
+                                            project_id: project.id,
+                                            checklist_id: checklist.id,
+                                            params: { title: title,
+                                                      tests: tests })
+    if public_token
+      version.public_token = public_token
+      version.save!
+    end
+    version
   end
 end
