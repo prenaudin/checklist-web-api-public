@@ -11,18 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505150155) do
+ActiveRecord::Schema.define(version: 20160505151414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "checklists", force: :cascade do |t|
     t.string   "title"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "project_id"
-    t.jsonb    "test_suite",  default: {},    null: false
-    t.boolean  "is_public",   default: false, null: false
+    t.jsonb    "test_suite",  default: {}, null: false
     t.text     "description"
   end
 
