@@ -17,7 +17,7 @@ class Version < ApplicationRecord
 
   validates :title, presence: true
   validates :tests, presence: true, array_of_hashes: true
-  validates :public_token, uniqueness: true
+  validates :public_token, uniqueness: true, allow_nil: true
 
   # In the form of "the-version-title-the-checklist-title-24charslongtoken"
   def public_slug
