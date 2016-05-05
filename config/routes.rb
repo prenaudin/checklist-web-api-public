@@ -7,18 +7,21 @@ Rails.application.routes.draw do
 
     resources :projects, only: [:index, :show, :create, :update, :destroy] do
       resources :checklists, only: [:index, :show, :create, :update, :destroy] do
-        member do
-          post 'share',   action: :share
-          post 'unshare', action: :unshare
-          post 'copy',    action: :copy
+        resources :versions, only: [:index, :show, :create, :update, :destroy] do
+          member do
+            post :share
+            delete :share, action: :unshare
+          end
         end
-
-        resources :versions, only: [:index, :show, :create, :update, :destroy]
       end
     end
 
     root 'base#up'
     get '*unmatched_route', to: 'base#not_found'
+  end
+
+  namespace :public, path: 'public', defaults: { format: :json } do
+    resources :versions, only: [:show]
   end
 
   root to: redirect('/api/auth/validate_token')

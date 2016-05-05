@@ -77,36 +77,4 @@ RSpec.resource 'Checklists' do
       expect(status).to eq(200)
     end
   end
-
-  post '/api/projects/:project_id/checklists/:id/share' do
-    let(:project_id) { project.id }
-    let(:id)         { checklist.id }
-
-    example_request 'Share Checklist' do
-      expect(status).to eq(200)
-    end
-  end
-
-  post '/api/projects/:project_id/checklists/:id/unshare' do
-    let(:project_id) { project.id }
-    let(:id)         { checklist.id }
-
-    example_request 'Unshare Checklist' do
-      expect(status).to eq(200)
-    end
-  end
-
-  post '/api/projects/:project_id/checklists/:id/copy' do
-    parameter :'data.project', 'The project where the copy will be created'
-
-    let(:project_id) { project.id }
-    let(:id)         { checklist.id }
-    let(:raw_post) do
-      { data: { project: destination_project.id } }.to_json
-    end
-
-    example_request 'Copy Checklist' do
-      expect(status).to eq(200)
-    end
-  end
 end

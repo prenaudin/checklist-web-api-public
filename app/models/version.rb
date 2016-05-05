@@ -8,6 +8,7 @@
 #  updated_at   :datetime         not null
 #  tests        :jsonb            default("{}"), not null
 #  checklist_id :integer
+#  public_token :string
 #
 
 class Version < ApplicationRecord
@@ -16,4 +17,14 @@ class Version < ApplicationRecord
 
   validates :title, presence: true
   validates :tests, presence: true, array_of_hashes: true
+  validates :public_token, uniqueness: true, allow_nil: true
+
+  # In the form of "the-version-title-the-checklist-title-24charslongtoken"
+  def public_slug
+    return nil unless public_token
+    titles_slug = "#{title}-#{checklist.title}"
+                  .parameterize
+                  .truncate(30, separator: '-', omission: '')
+    "#{titles_slug}-#{public_token}"
+  end
 end
