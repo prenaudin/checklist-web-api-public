@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         resources :versions, only: [:index, :show, :create, :update, :destroy] do
           member do
             post :share
+            delete :share, action: :unshare
           end
         end
       end

@@ -117,4 +117,14 @@ RSpec.resource 'Versions' do
       expect(status).to eq(200)
     end
   end
+
+  delete '/api/projects/:project_id/checklists/:checklist_id/versions/:id/share' do
+    let(:project_id)   { project.id }
+    let(:checklist_id) { checklist.id }
+    let(:id)           { version.id }
+
+    example_request 'Unshare Version' do
+      expect(status).to eq(204)
+    end
+  end
 end
