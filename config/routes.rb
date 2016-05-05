@@ -13,7 +13,7 @@ Rails.application.routes.draw do
           post 'copy',    action: :copy
         end
 
-        resources :versions, only: [:index, :create, :update, :destroy]
+        resources :versions, only: [:index, :show, :create, :update, :destroy]
       end
     end
 
