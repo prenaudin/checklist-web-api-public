@@ -8,7 +8,9 @@ class UserUpdateChecklistContext < ApplicationContext
     @checklist = ChecklistRepository
                  .find_with_project(project: project,
                                     checklist_id: checklist_id)
-    @params    = coerce_to_params(params).permit(:title, test_suite: [])
+    @params    = coerce_to_params(params).permit(:title,
+                                                 :description,
+                                                 test_suite: [])
   end
 
   def call

@@ -5,7 +5,9 @@ class UserCreateChecklistContext < ApplicationContext
     user     = UserRepository.find(id: user_id)
     @project = ProjectRepository.find_with_user(user: user,
                                                 project_id: project_id)
-    @params = coerce_to_params(params).permit(:title, test_suite: [])
+    @params = coerce_to_params(params).permit(:title,
+                                              :description,
+                                              test_suite: [])
   end
 
   def call
