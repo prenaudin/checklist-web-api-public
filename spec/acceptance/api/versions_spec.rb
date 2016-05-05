@@ -28,6 +28,15 @@ RSpec.resource 'Versions' do
   let(:expiry)        { token_headers['expiry'] }
   let(:uid)           { token_headers['uid'] }
 
+  get '/api/projects/:project_id/checklists/:checklist_id/versions/:id' do
+    let(:project_id)   { project.id }
+    let(:checklist_id) { checklist.id }
+    let(:id)           { version.id }
+    example_request 'Show Version' do
+      expect(status).to eq(200)
+    end
+  end
+
   get '/api/projects/:project_id/checklists/:checklist_id/versions' do
     let(:project_id)   { project.id }
     let(:checklist_id) { checklist.id }

@@ -20,6 +20,15 @@ module Api
              include: params[:include])
     end
 
+    def show
+      version = UserShowVersionContext
+                .call(user_id: current_user.id,
+                      project_id: params[:project_id],
+                      checklist_id: params[:checklist_id],
+                      version_id: params[:id])
+      render(json: version, serializer: Api::VersionSerializer, root: 'data')
+    end
+
     def update
       version = UserUpdateVersionContext
                 .call(user_id: current_user.id,
