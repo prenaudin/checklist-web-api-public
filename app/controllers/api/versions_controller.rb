@@ -6,7 +6,10 @@ module Api
                       project_id: params[:project_id],
                       checklist_id: params[:checklist_id],
                       params: params[:data])
-      render(json: version, serializer: Api::VersionSerializer, root: 'data')
+      render(json: version,
+             serializer: Api::VersionSerializer,
+             root: 'data',
+             include: params[:include])
     end
 
     def index
@@ -26,7 +29,10 @@ module Api
                       project_id: params[:project_id],
                       checklist_id: params[:checklist_id],
                       version_id: params[:id])
-      render(json: version, serializer: Api::VersionSerializer, root: 'data')
+      render(json: version,
+             serializer: Api::VersionSerializer,
+             root: 'data',
+             include: params[:include])
     end
 
     def update
@@ -36,7 +42,10 @@ module Api
                       checklist_id: params[:checklist_id],
                       version_id: params[:id],
                       params: params[:data])
-      render(json: version, serializer: Api::VersionSerializer, root: 'data')
+      render(json: version,
+             serializer: Api::VersionSerializer,
+             root: 'data',
+             include: params[:include])
     end
 
     def destroy
