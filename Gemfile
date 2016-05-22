@@ -10,7 +10,7 @@ gem 'pg', '~> 0.18'
 gem 'devise', '4.0.0.rc1'
 gem 'devise_token_auth', github: 'lynndylanhurley/devise_token_auth',
                          branch: 'master'
-gem 'active_model_serializers', '~> 0.10.0.rc5'
+gem 'active_model_serializers', '~> 0.10.0.rc3'
 gem 'omniauth'
 
 gem 'puma'
